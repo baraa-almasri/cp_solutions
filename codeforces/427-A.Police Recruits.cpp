@@ -1,0 +1,37 @@
+// http://codeforces.com/contest/427/problem/A
+#include <iostream>
+#include <stdio.h>
+#include <string>
+#include <string.h>
+#include <math.h>
+#include <vector>
+#include <algorithm>
+
+////////////////////////////////////////////////////////////////
+////////////////MAIN FUNCTION///////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    int event;
+    int recruits = 0;
+    int crimes = 0;
+
+    while(n--) {
+        scanf("%d", &event);
+
+        // the punsh line
+        event < 0? (recruits > 0? recruits--: crimes++): recruits += event;
+
+    }
+
+    printf("%d\n", crimes);
+
+    return 0;
+}
+
+////////////////////////////////////////////////////////////////
+////////////////END MAIN FUNCTION///////////////////////////////
+////////////////////////////////////////////////////////////////

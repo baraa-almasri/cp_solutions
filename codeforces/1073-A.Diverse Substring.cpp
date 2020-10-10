@@ -16,8 +16,6 @@ int main() {
     int n;
     std::string s;
     std::cin >> n >> s;
-
-    bool diversable{false};
   
     forK(0, n-1) {
         if( s[k] != s[k+1]) {

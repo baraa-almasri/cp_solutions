@@ -70,11 +70,13 @@ inline bool isEven(int n) {
 int main() {
     int t;
     scanf("%d", &t);
+    lli s, a, b, c;
+    lli chocs;
     while(t--) {
-        lli s, a, b, c;
         scanf("%lld %lld %lld %lld", &s, &a, &b, &c);
-        lli chocs = s/c;
-        printf("%lld\n", ((chocs)/(a))*b + chocs);
+        chocs = s/c;
+        chocs += (chocs/a)*b;
+        printf("%lld\n", chocs);
     }
 
     return 0;

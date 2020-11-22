@@ -19,12 +19,13 @@ int main() {
     float a, b;
     scanf("%f %f", &a, &b);
 
-    float totHours{a};
-    while((a/b) > 0.009) {
-        totHours += (a/b);
-
+    float totHours{a}, aOverB{a/b};
+    while(aOverB > 0.009) {
+        totHours += aOverB;
         a /= b;
+        aOverB = a/b;
     }
+    
     printf("%.0f\n", floor(totHours));
 
     return 0;

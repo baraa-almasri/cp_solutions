@@ -50,12 +50,16 @@ int min(int a, int b) {
     return a < b? a: b;
 }
 
-int getGCD(int a, int b) {
-    if (a == 0) {
-        return b;
-    }
+int max(int a, int b) {
+    return a > b? a: b;
+}
 
-    return getGCD(b % a, a);
+int getGCD(int a, int b) {
+    int q = max(a,b)/min(a,b);
+    int r = max(a,b) % (q*min(a,b));
+
+    if (r == 0) return min(a,b);
+    else return getGCD(r, min(a,b));
 }
 
 int getDivisors(int a) {

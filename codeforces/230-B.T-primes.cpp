@@ -66,10 +66,9 @@ bool *getPrimes(int limit) {
         prime[i] = true;
     }
 
-    for (int i = 2; i <= 10000; i++) {
-        if (isPrime(i)) {
-            prime[i] = true;
-            for (int j = 2 * i; j <= limit; j += i) {
+    for (int i = 2; i*i <= limit; i++) {
+        if (prime[i]) {
+            for (int j = i * i; j <= limit; j += i) {
                 prime[j] = false;
             }
         }

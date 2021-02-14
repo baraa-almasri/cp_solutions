@@ -53,24 +53,14 @@ inline bool isPrime(lli n) {
  * [[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]
  */
 
-bool isBeautiful(int n) {
-    int sqrtN = sqrt(n);
-    for (int k = 1; k <= sqrtN; k++) {
-        if ( ((pow(2, k) - 1) * pow(2, k-1)) == n ) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 int getGreatestBeautifulDiv(int n) {
-    int maxDiv = 1;
-    for (int i = 1; i <= n; i++) {
-        maxDiv = (n % i == 0 && isBeautiful(i))? i: maxDiv;
-    }
-
-    return maxDiv;
+    return (n % 32640 == 0)? 32640: 
+        (n % 8128 == 0)? 8128:
+        (n % 2016 == 0)? 2016:
+        (n % 496 == 0)? 496: 
+        (n % 120 == 0)? 120:
+        (n % 28 == 0)? 28:
+        (n % 6 == 0)? 6: 1;
 }
 
 int main() {

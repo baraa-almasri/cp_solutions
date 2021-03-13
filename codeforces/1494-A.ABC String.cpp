@@ -29,46 +29,6 @@ using namespace std;
  * [[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]
  */
 
-bool isValidParenths(string s) {
-	if (s.length()%2 != 0) {
-		return false;
-	}
-
-	stack<char> stk;
-	stk.push(0);
-	char top;
-	for (char c: s) {
-		if (!stk.empty()) {
-			top = stk.top();
-		}
-
-		switch (c) {
-		case '(':
-			stk.push(c);
-			break;
-
-		case ')':
-			if (top != '(') {
-				return false;
-			}
-			stk.pop();
-			break;
-		}
-	}
-
-	stk.pop();
-	return stk.empty();
-}
-
-int countChar(string s, char c) {
-    int count{0};
-    for (char chr: s) {
-        count += (chr == c);
-    }
-
-    return count;
-}
-
 int main() {
     #ifdef DEBUG_BLYAT
     freopen("../gulag/input.txt", "r", stdin);
@@ -80,52 +40,57 @@ int main() {
     string a;
     int opened{0}, closed{0}, otherCount{0};
     char open, close, other;
-    int size;
+    map<char, bool> isOpen;
+
     while (t--) {
         cin >> a;
 
         open = a.front();
         close = a.back();
-
-        other = (open == 'A' && close == 'B'? 'C': 
-            open == 'A' && close == 'C'? 'B': 
-            open == 'B' && close == 'A'? 'C': 
-            open == 'B' && close == 'C'? 'A': 
-            open == 'C' && close == 'A'? 'B': 
-            open == 'C' && close == 'B'? 'A': 0);
-
+        
         if (open == close) {
             no:
             puts("NO");
         
         } else {
+            
+            other = (open == 'A' && close == 'B'? 'C': 
+                open == 'A' && close == 'C'? 'B': 
+                open == 'B' && close == 'A'? 'C': 
+                open == 'B' && close == 'C'? 'A': 
+                open == 'C' && close == 'A'? 'B': 
+                open == 'C' && close == 'B'? 'A': 0);
 
-            opened = countChar(a, open);
-            closed = countChar(a, close);
-            otherCount = countChar(a, other);
+            opened = count_if(all(a), [open](char c){ return c == open;});
+            closed = count_if(all(a), [close](char c){ return c == close;});
+            otherCount = count_if(all(a), [other](char c){ return c == other;});
+            
+            isOpen[open] = true;
+            isOpen[close] = false;
+            isOpen[other] = !(opened >= closed);
 
-            if (closed + opened != otherCount && opened + otherCount != closed && otherCount + closed != opened) {
-                goto no;
-            }
-
-            size = a.length();
-            for (int i = 0; i < size; i++) {
-                if (a[i] == open) {
-                    a.replace(i, 1, "(");
-                } else if (a[i] == close) {
-                    a.replace(i, 1, ")");
-                } else if (a[i] == other && opened >= closed) {
-                    a.replace(i, 1, ")");
-                } else if (a[i] == other && opened < closed) {
-                    a.replace(i, 1, "(");
+            stack<char> stk;
+            stk.push(0);
+            for (char chr: a) {
+                if (isOpen[chr]) {
+                    stk.push(chr);
+                } else {
+                    if (!isOpen[stk.top()]) {
+                        goto no;
+                    }
+                    stk.pop();
                 }
             }
-
-            if (isValidParenths(a)) {
+            
+            stk.pop();
+            if (stk.empty()) {
                 puts("YES");
             } else {
                 goto no;
             }
+
+            stk = stack<char>();
+            stk.push(0);
         }
         
     }

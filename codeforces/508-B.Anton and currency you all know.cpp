@@ -40,21 +40,17 @@ int main() {
     freopen("../gulag/input.txt", "r", stdin);
     #endif
 
-    ios::sync_with_stdio(true);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    char* num = (char*)malloc(100001);
+    scanf("%s", num);
 
-    string num;
-    cin >> num;
-
-    int size{num.length()};
+    int size{strlen(num)};
     int i{0}, rightEven{size-1};
 
     while (i < size) {
         if (num[i] % 2 == 0) {
             rightEven = i;
         }
-        if (num[i]+1 <= num.back() && num[i] % 2 == 0) {
+        if (num[i]+1 <= num[size-1] && num[i] % 2 == 0) {
             break;
         }
         i++;
@@ -63,10 +59,11 @@ int main() {
     bool foundEven{num[rightEven] % 2 == 0};    
     swap(
         &(i != size? num[i]: num[rightEven]), 
-        &num.back()
+        &num[size-1]
     );
 
     cout << (foundEven? num: "-1") << '\n';    
+    free(num);
 
     return 0;
 }

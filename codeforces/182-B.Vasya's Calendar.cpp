@@ -1,4 +1,4 @@
-// problem link
+// https://codeforces.com/problemset/problem/182/B
 #include <iostream>
 #include <cstdio>
 #include <string>
@@ -30,35 +30,21 @@ using namespace std;
  * [[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]
  */
 
-int last_index(int *a, int size, int e) {
-    int _i{-1};
-    for (int i{0}; i < size; i++) {
-        if (a[i] == e) {
-            _i = i;
-        }
-    }
-    return _i;
-}
-
 void solve() {
+    int d;
+    scanf("%d", &d);
     int n;
     scanf("%d", &n);
 
-    int *a = new int[n];
-    for_each(allArr(a, n), [](int &i){ scanf("%d", &i); });
-    
-    int minMaxSum = *max_element(allArr(a, n)) + *min_element(allArr(a, n));
-    int f, count{0};
-    for (int i{0}; count < n/2 ; i++) {
-        if (a[i] == INT32_MIN) {
-            continue;
-        }
-        f = last_index(a, n, minMaxSum - a[i]);
-        printf("%d %d\n", i+1, 1 + f);
-        a[f] = INT32_MIN;
-        count++;
+    int days{0}, a, prev{d};
+    while (n--) {
+        scanf("%d", &a);
+        days += abs(d-prev);
+        prev = a;
     }
 
+    printf("%d\n", days);
+    
 }
 
 int main() {

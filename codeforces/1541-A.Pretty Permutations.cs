@@ -1,6 +1,5 @@
 // https://codeforces.com/contest/1541/problem/A
 using System;
-using System.Linq;
 
 namespace Cff
 {
@@ -8,32 +7,28 @@ namespace Cff
 	{
 		public static void Main(string[] args)
 		{
-			uint t = Convert.ToUInt32(Console.ReadLine());
-			uint count;
-			int[] a;
-
+			ushort t = Convert.ToUInt16(Console.ReadLine());
+			ushort n;
 			while (t-- > 0)
 			{
-				count = 0;
-				Console.ReadLine(); // n
-
-				a = Console.ReadLine()
-					.Split(" ")
-					.Select(s => Convert.ToInt32(s))
-					.ToArray();
-
-				for (int i = 1; i <= a.Length; i += 2)
+				n = Convert.ToUInt16(Console.ReadLine());
+				if (n % 2 == 0)
 				{
-					for (int j = i + 1; j <= a.Length; j++)
+					for (int i = 1; i < n; i += 2)
 					{
-						if ((a[i - 1] * a[j - 1] == i + j) || (i + 1 <= a.Length && a[i] * a[j - 1] == (i + 1) + j))
-						{
-							count++;
-						}
+						Console.Write($"{i+1} {i} ");
 					}
 				}
-
-				Console.WriteLine(count);
+				else
+				{
+					for (int i = 1; i < n-2; i += 2)
+					{
+						Console.Write($"{i+1} {i} ");
+					}
+					Console.Write($"{n} {n-2} {n-1}");
+				}
+				
+				Console.WriteLine();
 			}
 		}
 	}

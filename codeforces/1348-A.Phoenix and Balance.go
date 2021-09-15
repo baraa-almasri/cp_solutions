@@ -13,15 +13,12 @@ func main() {
 	var n, sum1, sum2 int
 	for ; t > 0; t-- {
 		fmt.Scan(&n)
-		sum1, sum2 = 0, 0
 
-		sum1 += 2 << (n - 1)
-		for s1 := 1; s1 < n/2; s1++ {
-			sum1 += 2 << (s1 - 1)
-		}
-		for s2 := (n / 2); s2 < n; s2++ {
-			sum2 += 2 << (s2 - 1)
-		}
+		// everybody is gangsta until power series appears out of no where :)
+		sum1 = 2<<(n-1) + // last wieght
+			((2 << 0) - (2 << ((n / 2) - 1))) / -1 // Σ k = 1 to (n/2)-1 z^k
+
+		sum2 = ((2 << ((n / 2) - 1)) - (2 << (n - 1))) / -1 // Σ k = n/2 to n-1 z^k
 
 		fmt.Println(math.Abs(float64(sum2 - sum1)))
 	}

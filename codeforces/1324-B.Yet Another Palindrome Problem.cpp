@@ -24,13 +24,16 @@ inline void solve() {
     scanf("%d", &n);
     int *a = new int[n];
 
-    map<int, vector<int>> indices;
+    vector<pair<int, int>> indices; // {value, index}
+    int freq[5001]{};
     bool found{false};
+
     for (int i{0}; i < n; i++) {
         scanf("%d", &a[i]);
-        indices[a[i]].push_back(i);
+        freq[a[i]]++;
+        indices.push_back({a[i], i+1});
 
-        if (!found && indices[a[i]].size() >= 3) {
+        if (!found && freq[a[i]] >= 3) {
             found = true;
         }
     }
@@ -40,12 +43,16 @@ inline void solve() {
         return;
     }
 
+    map<int, int> lastIndex;
+    
     for (auto &p: indices) {
-        for (int i{0}; i < p.second.size()-1; i++) {
-            if (abs(p.second[i] - p.second[i+1]) > 1) {
-                puts("YES");
-                return;
-            }
+        if (lastIndex[p.first] == 0) {
+            lastIndex[p.first] = p.second;
+        }
+
+        if (abs(lastIndex[p.first] - p.second) > 1) {
+            puts("YES");
+            return;
         }
     }
 
